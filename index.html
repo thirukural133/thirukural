@@ -52,13 +52,36 @@
       font-size:20px;
       white-space:pre-line;
     }
+	.logo {
+	  width: 80px;           /* Adjust size as needed */
+      height: auto;
+      display: block;
+      margin: 0 auto 12px;   /* Centers logo and adds space below it */
+    } 
+	.video-portrait {
+  position: relative;
+  width: 280px;            /* Adjust width as needed */
+  margin: 24px auto;       /* Centers the video */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.video-portrait iframe {
+  width: 100%;
+  aspect-ratio: 9 / 16;    /* Vertical video format */
+  display: block;
+  border: none;
+}
     footer{ text-align:center; margin-top:22px; color:#61748a; font-size:13px; }
   </style>
 </head>
 <body>
   <div class="container" role="main">
     <header>
-      <h1>திருக்குறள் — குறள் 1–10</h1>
+	  <img src="logo.png" alt="திருக்குறள் லோகோ" class="logo">
+      <h1>திருக்குறள் </h1>
+	  <h3> பால் : அறத்துப்பால்    |     இயல் : பாயிரவியல்    |   அதிகாரம் :   கடவுள் வாழ்த்து </h3>
     </header>
 
     <section class="kural" id="kural-1">
@@ -120,9 +143,18 @@
       <p class="kural-text">பிறவிப் பெருங்கடல் நீந்துவர் நீந்தார்
 இறைவன் அடிசேரா தார்</p>
     </section>
-
+	
+ <div class="video-container">
+   <iframe width="560" height="315"
+     src="https://www.youtube.com/shorts/D5P8qtmlu5Q"
+     title="YouTube video player"
+     frameborder="0"
+     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+     allowfullscreen>
+   </iframe>
+ </div>
     <footer>
-      © திருக்குறள் — நீங்கள் வழங்கிய உரை
+      © thirukural133
     </footer>
   </div>
 </body>
