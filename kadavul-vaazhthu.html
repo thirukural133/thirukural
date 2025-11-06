@@ -74,6 +74,29 @@
   border: none;
 }
     footer{ text-align:center; margin-top:22px; color:#61748a; font-size:13px; }
+	nav {
+    background-color: #f3e8ff;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.08);
+  }
+  nav a {
+    text-decoration: none;
+    color: #6d28d9;
+    font-weight: 600;
+    margin: 0 12px;
+    transition: color 0.2s;
+  }
+  nav a:hover {
+    color: #4c1d95;
+  }
+  nav a.active {
+    color: #111827;
+    border-bottom: 2px solid #6d28d9;
+  }
+  
   </style>
 </head>
 <body>
@@ -83,6 +106,12 @@
       <h1>திருக்குறள் </h1>
 	  <h3> பால் : அறத்துப்பால்    |     இயல் : பாயிரவியல்    |   அதிகாரம் :   கடவுள் வாழ்த்து </h3>
     </header>
+
+	<nav>
+		<a href="index.html">🏠 முகப்பு</a>
+		<a href="kadavul-vaazhthu.html" class="active">கடவுள் வாழ்த்து</a>
+		<a href="vaan-sirappu.html">வான்சிறப்பு</a>
+	</nav>
 
     <section class="kural" id="kural-1">
       <h2 class="kural-no">குறள் 1</h2>

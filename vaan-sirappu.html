@@ -58,6 +58,20 @@
       display: block;
       margin: 0 auto 12px;
     } 
+	.video-portrait {
+  position: relative;
+  width: 280px;            /* Adjust width as needed */
+  margin: 24px auto;       /* Centers the video */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+.video-portrait iframe {
+  width: 100%;
+  aspect-ratio: 9 / 16;    /* Vertical video format */
+  display: block;
+  border: none;
+}
     footer{ text-align:center; margin-top:22px; color:#61748a; font-size:13px; }
     nav{
       text-align:center;
@@ -70,20 +84,43 @@
       margin:0 10px;
     }
     nav a:hover{ text-decoration:underline; }
+	nav {
+    background-color: #f3e8ff;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.08);
+  }
+  nav a {
+    text-decoration: none;
+    color: #6d28d9;
+    font-weight: 600;
+    margin: 0 12px;
+    transition: color 0.2s;
+  }
+  nav a:hover {
+    color: #4c1d95;
+  }
+  nav a.active {
+    color: #111827;
+    border-bottom: 2px solid #6d28d9;
+  }
   </style>
 </head>
 <body>
   <div class="container" role="main">
     <header>
-      <img src="logo.png" alt="திருக்குறள் லோகோ" class="logo">
+      <img src="/logo.png" alt="திருக்குறள் லோகோ" class="logo">
       <h1>திருக்குறள்</h1>
       <h3>பால் : அறத்துப்பால் | இயல் : பாயிரவியல் | அதிகாரம் : வான்சிறப்பு</h3>
     </header>
 
     <nav>
-      <a href="index.html">🏠 முகப்பு</a> |
-      <a href="kadavul-vaazhthu.html">கடவுள் வாழ்த்து</a>
-    </nav>
+  <a href="index.html">🏠 முகப்பு</a>
+  <a href="kadavul-vaazhthu.html">கடவுள் வாழ்த்து</a>
+  <a href="vaan-sirappu.html" class="active">வான்சிறப்பு</a>
+</nav>
 
     <section class="kural" id="kural-11">
       <h2 class="kural-no">குறள் 11</h2>
@@ -144,7 +181,15 @@
       <p class="kural-text">நீரின் றமையா துலகெனின் யார்யார்க்கும்  
 வானின் றமையா தொழுக்கு</p>
     </section>
-
+ <div class="video-container">
+   <iframe width="560" height="315"
+     src="https://www.youtube.com/embed/8_6POQqw9K0"
+     title="YouTube video player"
+     frameborder="0"
+     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+     allowfullscreen>
+   </iframe>
+ </div>
     <footer>
       © thirukural133
     </footer>
