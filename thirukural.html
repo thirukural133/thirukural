@@ -24,7 +24,7 @@ body{font-family:"Noto Serif Tamil","Latha",serif;background:var(--bg);color:var
 .tab{padding:11px 18px;font-size:13px;font-family:inherit;color:#7c5cbf;cursor:pointer;white-space:nowrap;border:none;background:none;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s}
 .tab.on{color:#f5c97a;border-bottom-color:#f5c97a}
 
-.main{max-width:900px;margin:0 auto;padding:20px 16px}
+.main{padding:20px 4px}
 
 /* Kural cards */
 .kcard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:10px;cursor:pointer;transition:border-color .2s,box-shadow .2s}
@@ -79,6 +79,21 @@ body{font-family:"Noto Serif Tamil","Latha",serif;background:var(--bg);color:var
 
 .site-footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:20px}
 .site-footer a{color:var(--accent);text-decoration:none}
+
+/* ── PAGE LAYOUT with sidebars ── */
+.page-wrap{display:flex;gap:16px;align-items:flex-start;max-width:1400px;margin:0 auto;padding:20px 12px}
+.sidebar{width:180px;flex-shrink:0;position:sticky;top:80px}
+.sidebar-title{font-size:11px;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.yt-short{border-radius:10px;overflow:hidden;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.12);background:#000}
+.yt-short iframe{width:100%;aspect-ratio:9/16;display:block;border:none}
+.center-col{flex:1;min-width:0}
+
+/* On tablets and below, hide sidebars */
+@media(max-width:900px){
+  .sidebar{display:none}
+  .page-wrap{padding:0}
+  .center-col{min-width:0}
+}
 </style>
 </head>
 <body>
@@ -100,7 +115,31 @@ body{font-family:"Noto Serif Tamil","Latha",serif;background:var(--bg);color:var
   <button class="tab" onclick="go('about',this)">பற்றி</button>
 </div>
 
-<div class="main" id="main"></div>
+<div class="page-wrap">
+  <div class="sidebar">
+  <div class="sidebar-title">🎬 Shorts</div>
+  <div class="yt-short"><iframe src="https://www.youtube.com/embed/RbDVWEANnpA?loop=1&mute=1" title="Thirukkural Short 1" allowfullscreen loading="lazy"></iframe></div>
+<div class="yt-short"><iframe src="https://www.youtube.com/embed/_Ain8NG4oxU?loop=1&mute=1" title="Thirukkural Short 2" allowfullscreen loading="lazy"></iframe></div>
+<div class="yt-short"><iframe src="https://www.youtube.com/embed/YnE2JroNjwk?loop=1&mute=1" title="Thirukkural Short 3" allowfullscreen loading="lazy"></iframe></div>
+  <a href="https://www.youtube.com/@thirukural133" target="_blank" rel="noopener"
+     style="display:block;text-align:center;margin-top:6px;font-size:11px;color:var(--accent);text-decoration:none">
+    ▶ View Channel
+  </a>
+</div>
+  <div class="center-col">
+    <div class="main" id="main"></div>
+  </div>
+  <div class="sidebar">
+  <div class="sidebar-title">🎬 Shorts</div>
+  <div class="yt-short"><iframe src="https://www.youtube.com/embed/uV1f3yW5ONA?loop=1&mute=1" title="Thirukkural Short 1" allowfullscreen loading="lazy"></iframe></div>
+<div class="yt-short"><iframe src="https://www.youtube.com/embed/ED7Bbnyb04A?loop=1&mute=1" title="Thirukkural Short 2" allowfullscreen loading="lazy"></iframe></div>
+<div class="yt-short"><iframe src="https://www.youtube.com/embed/pWH8mXOD6z4?loop=1&mute=1" title="Thirukkural Short 3" allowfullscreen loading="lazy"></iframe></div>
+  <a href="https://www.youtube.com/@thirukural133" target="_blank" rel="noopener"
+     style="display:block;text-align:center;margin-top:6px;font-size:11px;color:var(--accent);text-decoration:none">
+    ▶ View Channel
+  </a>
+</div>
+</div>
 
 <footer class="site-footer">
   © thirukural133 2026 &nbsp;|&nbsp;
