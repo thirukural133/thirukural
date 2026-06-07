@@ -1,0 +1,254 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@400;600;700&display=swap');
+
+.vp{width:640px;margin:0 auto;font-family:'Noto Serif Tamil','Latha',serif;background:#111;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.5)}
+.vp-screen{position:relative;width:640px;height:360px;overflow:hidden;background:#111}
+
+/* ── SLIDE 1: Red intro ── */
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity 0.6s}
+.slide.active{opacity:1}
+
+.s-intro{background:#cc1a1a}
+.s-intro::before{content:'';position:absolute;inset:0;background:
+  repeating-linear-gradient(90deg,rgba(255,200,0,0.08) 0,rgba(255,200,0,0.08) 2px,transparent 2px,transparent 40px),
+  repeating-linear-gradient(0deg,rgba(255,200,0,0.08) 0,rgba(255,200,0,0.08) 2px,transparent 2px,transparent 40px)}
+.intro-border{position:absolute;inset:8px;border:3px solid #f5c040;border-radius:4px;pointer-events:none}
+.intro-border::before{content:'';position:absolute;inset:4px;border:1px solid rgba(245,192,64,0.5);border-radius:2px}
+
+.intro-img{width:90px;height:90px;margin-bottom:12px;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.4))}
+.intro-title{font-size:26px;font-weight:700;color:#f5c97a;text-shadow:0 2px 4px rgba(0,0,0,0.5);margin-bottom:8px}
+.intro-sub{font-size:14px;color:#ffe090;text-align:center;line-height:1.8}
+
+/* ── SLIDE 2: White chapter info ── */
+.s-chapter{background:#fff}
+.chap-inner{text-align:center;padding:20px}
+.chap-line{font-size:19px;color:#8b0000;font-weight:600;margin-bottom:10px;line-height:1.8}
+.subscribe-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:18px;font-size:12px;color:#555}
+.sub-btn{background:#ff0000;color:#fff;border:none;border-radius:4px;padding:4px 10px;font-size:12px;cursor:pointer}
+.bell{color:#555;font-size:14px}
+
+/* ── SLIDE 3+: Parchment kural slides ── */
+.s-parchment{background:#f5edd0}
+.parch-frame{position:absolute;inset:0;pointer-events:none}
+.parch-top-bar{position:absolute;top:0;left:0;right:0;height:38px;background:linear-gradient(180deg,#3d1a00,#6b2e00);display:flex;align-items:center;justify-content:center;border-bottom:2px solid #c47c00}
+.parch-top-title{font-size:16px;font-weight:700;color:#f5c97a;letter-spacing:1px}
+.parch-border{position:absolute;top:38px;left:0;right:0;bottom:0;background:repeating-linear-gradient(180deg,rgba(139,69,0,0.06) 0,rgba(139,69,0,0.06) 1px,transparent 1px,transparent 32px)}
+
+/* ornamental corners */
+.corner{position:absolute;width:60px;height:60px;opacity:0.7}
+.corner svg{width:60px;height:60px}
+.tl{top:38px;left:0} .tr{top:38px;right:0;transform:scaleX(-1)}
+.bl{bottom:0;left:0;transform:scaleY(-1)} .br{bottom:0;right:0;transform:scale(-1)}
+
+.kural-content{position:absolute;top:48px;left:72px;right:72px;bottom:30px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-start;padding-top:8px}
+.kural-item{margin-bottom:14px;animation:fadeIn 0.5s ease}
+.kural-num{font-size:12px;color:#8b2500;font-weight:700;margin-bottom:3px}
+.kural-text{font-size:14px;color:#1a0800;line-height:1.8;white-space:pre-line}
+
+.lotus-div{text-align:center;color:#c47c00;font-size:18px;margin:8px 0}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── CONTROLS ── */
+.controls{background:#1a1a1a;padding:10px 16px;display:flex;align-items:center;gap:10px}
+.ctrl-btn{background:none;border:none;color:#fff;cursor:pointer;font-size:22px;padding:4px 8px;border-radius:4px;transition:background 0.15s}
+.ctrl-btn:hover{background:rgba(255,255,255,0.1)}
+.progress-wrap{flex:1;height:4px;background:#444;border-radius:2px;cursor:pointer;position:relative}
+.progress-fill{height:100%;background:#c00;border-radius:2px;transition:width 0.3s}
+.time-lbl{font-size:12px;color:#aaa;min-width:60px;text-align:right}
+.slide-counter{font-size:11px;color:#888;min-width:40px}
+
+.chapter-selector{background:#2a2a2a;padding:8px 16px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.chapter-selector::-webkit-scrollbar{display:none}
+.chap-pill{background:#333;border:1px solid #555;color:#ccc;border:none;border-radius:4px;padding:5px 12px;font-size:11px;cursor:pointer;white-space:nowrap;font-family:inherit;transition:background 0.2s}
+.chap-pill.on{background:#8b0000;color:#f5c97a}
+.chap-pill:hover{background:#444}
+</style>
+
+<div role="region" aria-label="Thirukkural animated video player showing kurals with Tamil text">
+<div class="vp">
+  <div class="vp-screen" id="screen">
+
+    <!-- SLIDE 0: Red intro -->
+    <div class="slide s-intro active" id="sl0">
+      <div class="intro-border"></div>
+
+      <div class="intro-title">திருக்குறள்</div>
+      <div class="intro-sub" id="intro-sub">குறள் எண் : 801- 810<br>பால் : பொருட்பால்<br>அதிகாரம் : பழைமை</div>
+    </div>
+
+    <!-- SLIDE 1: Chapter info (white) -->
+    <div class="slide s-chapter" id="sl1">
+      <div class="chap-inner">
+        <div class="chap-line" id="chap-l1">பால் : 2</div>
+        <div class="chap-line" id="chap-l2">இயல் : 10</div>
+        <div class="chap-line" id="chap-l3">அதிகாரம் : 81</div>
+        <div class="chap-line" id="chap-l4">குறள் : 801</div>
+        <div class="subscribe-row">
+          <span>▶</span><span class="sub-btn">Subscribe</span>
+          <span class="bell">🔔</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: First 5 kurals -->
+    <div class="slide s-parchment" id="sl2">
+      <div class="parch-frame">
+        <div class="parch-top-bar"><span class="parch-top-title">திருக்குறள்</span></div>
+        <div class="parch-border"></div>
+        <div class="corner tl"><svg viewBox="0 0 60 60"><path d="M0,60 Q0,0 60,0" fill="none" stroke="#8b4500" stroke-width="2"/><path d="M8,60 Q8,8 60,8" fill="none" stroke="#c47c00" stroke-width="1"/><circle cx="8" cy="8" r="4" fill="#c47c00"/><path d="M0,30 Q15,15 30,0" fill="none" stroke="#8b4500" stroke-width="1" stroke-dasharray="2,3"/></svg></div>
+        <div class="corner tr"><svg viewBox="0 0 60 60"><path d="M0,60 Q0,0 60,0" fill="none" stroke="#8b4500" stroke-width="2"/><path d="M8,60 Q8,8 60,8" fill="none" stroke="#c47c00" stroke-width="1"/><circle cx="8" cy="8" r="4" fill="#c47c00"/></svg></div>
+        <div class="corner bl"><svg viewBox="0 0 60 60"><path d="M0,60 Q0,0 60,0" fill="none" stroke="#8b4500" stroke-width="2"/><path d="M8,60 Q8,8 60,8" fill="none" stroke="#c47c00" stroke-width="1"/><circle cx="8" cy="8" r="4" fill="#c47c00"/></svg></div>
+        <div class="corner br"><svg viewBox="0 0 60 60"><path d="M0,60 Q0,0 60,0" fill="none" stroke="#8b4500" stroke-width="2"/><path d="M8,60 Q8,8 60,8" fill="none" stroke="#c47c00" stroke-width="1"/><circle cx="8" cy="8" r="4" fill="#c47c00"/></svg></div>
+      </div>
+      <div class="kural-content" id="kc1"></div>
+    </div>
+
+    <!-- SLIDE 3: Last 5 kurals -->
+    <div class="slide s-parchment" id="sl3">
+      <div class="parch-frame">
+        <div class="parch-top-bar"><span class="parch-top-title">திருக்குறள்</span></div>
+        <div class="parch-border"></div>
+        <div class="corner tl"><svg viewBox="0 0 60 60"><path d="M0,60 Q0,0 60,0" fill="none" stroke="#8b4500" stroke-width="2"/><path d="M8,60 Q8,8 60,8" fill="none" stroke="#c47c00" stroke-width="1"/><circle cx="8" cy="8" r="4" fill="#c47c00"/></svg></div>
+        <div class="corner tr"><svg viewBox="0 0 60 60"><path d="M0,60 Q0,0 60,0" fill="none" stroke="#8b4500" stroke-width="2"/><path d="M8,60 Q8,8 60,8" fill="none" stroke="#c47c00" stroke-width="1"/><circle cx="8" cy="8" r="4" fill="#c47c00"/></svg></div>
+        <div class="corner bl"><svg viewBox="0 0 60 60"><path d="M0,60 Q0,0 60,0" fill="none" stroke="#8b4500" stroke-width="2"/><path d="M8,60 Q8,8 60,8" fill="none" stroke="#c47c00" stroke-width="1"/><circle cx="8" cy="8" r="4" fill="#c47c00"/></svg></div>
+        <div class="corner br"><svg viewBox="0 0 60 60"><path d="M0,60 Q0,0 60,0" fill="none" stroke="#8b4500" stroke-width="2"/><path d="M8,60 Q8,8 60,8" fill="none" stroke="#c47c00" stroke-width="1"/><circle cx="8" cy="8" r="4" fill="#c47c00"/></svg></div>
+      </div>
+      <div class="kural-content" id="kc2"></div>
+    </div>
+
+  </div><!-- /screen -->
+
+  <div class="controls">
+    <button class="ctrl-btn" id="playBtn" aria-label="Play">▶</button>
+    <button class="ctrl-btn" onclick="prevSlide()" aria-label="Previous">⏮</button>
+    <button class="ctrl-btn" onclick="nextSlide()" aria-label="Next">⏭</button>
+    <div class="progress-wrap" onclick="seekProgress(event)" aria-label="Progress">
+      <div class="progress-fill" id="prog"></div>
+    </div>
+    <span class="slide-counter" id="sc">1 / 4</span>
+    <span class="time-lbl" id="tl">0:00</span>
+  </div>
+
+  <div class="chapter-selector" id="chapSel"></div>
+</div>
+</div>
+
+<script>
+const CHAPTERS = [
+  { num: 81, book: 2, iyal: 10, name: "பழைமை", nameEn: "Old Friendship", kurals: [
+    [801, "பழைமை என்பது இது என்றால் அன்யாதினின் யாரும்\nதிழைமையைக் கீர்ந்திடா நட்பு"],
+    [802, "நட்டிற் குறுப்பிடு கேழுதகைமை மற்றத்\nகுப்பைந் சாண்டோர் கடன்"],
+    [803, "பழிய நட்பெவான் செய்யும் கொழுதகைமை\nசெய்தால் சகமையாக் கடை"],
+    [804, "விளைமுதைகான் வேண்டி இருப்பர் சொழுதகையாற்\nகோகையது நட்டார் செய்யின்"],
+    [805, "பேதைமை ஒன்ரோ பெருந்திழமை என்றார்க\nநோதக்க நட்டார் செய்யின்"],
+    [806, "எல்லைக்கண் நிற்றார் துறைவார் தெழைவிடத்தும்\nதொல்லைக்கண் நிற்றார் தொடர்பு"],
+    [807, "அழிவத்த செய்யினும் அன்பார் அன்பின்\nவழிவத்த கேண்மை யவர்"],
+    [808, "கேளிழுக்கோ சேரே கொழுதகைமை வல்லார்க்கு\nநான்ழுக்கு நட்டார் செய்யின்"],
+    [809, "கெடாவழி வேண்டிய கேண்மையார் கேண்மை\nவிடாது விழையும் உலகு"],
+    [810, "விளமைவார் விளமைய பன்பமையார்கண்\nபண்பின் தொழைப்பிரிய தார்"]
+  ]},
+  { num: 82, book: 2, iyal: 10, name: "தீநட்பு", nameEn: "Evil Friendship", kurals: [
+    [811, "பலர்க்கு உரியர் என்பது பழகிப் பழகி\nபலரால் வெறுக்கப்படும்"],
+    [812, "இனைத்து அறியா இன்னா செயல் செய்வார்\nகனைத்திருள் ஊரும் கனவு"],
+    [813, "உடம்படா உட்பகை வீரவன் நட்பின்\nகெடும்பகை யாரைக் கெடும்"],
+    [814, "மனத்தீமை தீதே விழைதல் அதனால்\nவினைத்தீமை சேர்ந்தொழுகல் நன்று"],
+    [815, "தீயார் திறமிக வேண்டா திருவினை\nஆயார் அகத்திருந்து கேண்மை"],
+    [816, "நல்லவர் நட்பும் கெடும் கேடு செய்யினும்\nபல்லார் படுவது பகல்"],
+    [817, "தீயாரைக் கொண்டாடும் சூழ்ச்சி கெடும் என்று\nகாயார் ஒருவர்க்கும் இல்"],
+    [818, "தீய கிளைஞர் தெரிவிலர் ஆயினும்\nதோயம் தழீஇத் தொடர்தல் வேண்டா"],
+    [819, "நட்புப் பரிசிலர் நட்டாரில் பட்டோர்க்கு\nமட்டிழந்து வேண்டா மனைவி"],
+    [820, "ஊக்கம் உடையார் ஒடுங்கார் உடைந்தாலும்\nதாக்கு அறிவாரைத் தொடர்"]
+  ]},
+  { num: 11, book: 1, iyal: 3, name: "செய்ந்நன்றியறிதல்", nameEn: "Gratitude", kurals: [
+    [101, "செய்யாமல் செய்த உதவிக்கு வையகமும்\nவானகமும் ஆற்றல் அரிது"],
+    [102, "காலத்தி னாற்செய்த நன்றி சிறிதெனினும்\nஞாலத்தின் மாணப் பெரிது"],
+    [103, "பயன்தூக்கார் செய்த உதவி நயன்தூக்கின்\nநன்மை கடலின் பெரிது"],
+    [104, "தினைத்துணை நன்றி செயினும் பனைத்துணையாக்\nகொள்வர் பயன்தெரி வார்"],
+    [105, "உதவி வரைத்தன்று உதவி உதவி\nசெயப்பட்டார் சால்பின் வரை"],
+    [106, "மறவற்க மாசற்றார் கேண்மை துறவற்க\nதுன்பத்துள் துப்பாயார் நட்பு"],
+    [107, "எழுமை எழுபிறப்பும் உள்ளுவர் தங்கண்\nவழுமை துடைத்தவர் நட்பு"],
+    [108, "நன்றி மறப்பது நன்றன்று நன்றல்லது\nஅன்றே மறப்பது நன்று"],
+    [109, "கொன்றன்ன இன்னா செயினும் அவர்செய்த\nஒன்றன்னதூஉம் உள்ளுக"],
+    [110, "எந்நன்றி கொன்றார்க்கும் உய்வுண்டாம் உய்வில்லை\nசெய்ந்நன்றி கொன்ற மகற்கு"]
+  ]}
+];
+
+let cur=0, playing=false, timer=null, elapsed=0;
+const DURATIONS=[3000,3000,5000,5000];
+
+function buildChapSel(){
+  const d=document.getElementById('chapSel');
+  d.innerHTML=CHAPTERS.map((c,i)=>`<button class="chap-pill ${i===0?'on':''}" onclick="loadChapter(${i})">${c.num}. ${c.name}</button>`).join('');
+}
+
+function loadChapter(i){
+  const ch=CHAPTERS[i];
+  document.getElementById('intro-sub').innerHTML=`குறள் எண் : ${ch.kurals[0][0]}– ${ch.kurals[9][0]}<br>பால் : ${ch.book===1?'அறத்துப்பால்':'பொருட்பால்'}<br>அதிகாரம் : ${ch.name}`;
+  document.getElementById('chap-l1').textContent=`பால் : ${ch.book}`;
+  document.getElementById('chap-l2').textContent=`இயல் : ${ch.iyal}`;
+  document.getElementById('chap-l3').textContent=`அதிகாரம் : ${ch.num}`;
+  document.getElementById('chap-l4').textContent=`குறள் : ${ch.kurals[0][0]}`;
+  fillParchment('kc1', ch.kurals.slice(0,5));
+  fillParchment('kc2', ch.kurals.slice(5,10));
+  document.querySelectorAll('.chap-pill').forEach((p,j)=>p.classList.toggle('on',j===i));
+  goSlide(0);elapsed=0;
+}
+
+function fillParchment(id, kurals){
+  const d=document.getElementById(id);
+  d.innerHTML=kurals.map((k,i)=>`
+    <div class="kural-item" style="animation-delay:${i*0.1}s">
+      <div class="kural-num">குறள் ${k[0]}</div>
+      <div class="kural-text">${k[1]}</div>
+    </div>
+    ${i<kurals.length-1?'<div class="lotus-div">❀</div>':''}
+  `).join('');
+}
+
+function goSlide(n){
+  document.querySelectorAll('.slide').forEach((s,i)=>s.classList.toggle('active',i===n));
+  cur=n;
+  document.getElementById('sc').textContent=`${n+1} / 4`;
+  document.getElementById('prog').style.width=(n/3*100)+'%';
+}
+
+function nextSlide(){elapsed=0;if(cur<3)goSlide(cur+1);else{stopPlay();goSlide(0)}}
+function prevSlide(){elapsed=0;if(cur>0)goSlide(cur-1)}
+
+function startPlay(){
+  playing=true;
+  document.getElementById('playBtn').textContent='⏸';
+  timer=setInterval(()=>{
+    elapsed+=200;
+    const dur=DURATIONS[cur];
+    const frac=elapsed/dur;
+    const base=cur/3;
+    document.getElementById('prog').style.width=(base*100+frac/3*100)+'%';
+    const secs=Math.floor((DURATIONS.slice(0,cur).reduce((a,b)=>a+b,0)+elapsed)/1000);
+    document.getElementById('tl').textContent=`${Math.floor(secs/60)}:${String(secs%60).padStart(2,'0')}`;
+    if(elapsed>=dur){elapsed=0;if(cur<3)goSlide(cur+1);else{stopPlay();goSlide(0)}}
+  },200);
+}
+
+function stopPlay(){
+  playing=false;
+  document.getElementById('playBtn').textContent='▶';
+  clearInterval(timer);
+}
+
+document.getElementById('playBtn').onclick=()=>playing?stopPlay():startPlay();
+
+function seekProgress(e){
+  const r=e.currentTarget.getBoundingClientRect();
+  const frac=(e.clientX-r.left)/r.width;
+  const slide=Math.floor(frac*4);
+  goSlide(Math.min(slide,3));
+  elapsed=0;
+}
+
+buildChapSel();
+loadChapter(0);
+</script>
